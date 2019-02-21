@@ -1,0 +1,164 @@
+enum PriceType {
+  BUY
+  FROM
+}
+
+enum ImageType {
+  PRIMARY
+  GALLERY
+}
+
+# Price
+type Price {
+  currencyIso: String
+  formattedValue: String
+  maxQuantity: Int
+  minQuantity: Int
+  priceType: PriceType
+  value: Float
+}
+
+type PriceRange {
+  maxPrice: Price
+  minPrice: Price
+}
+
+type Image {
+  altText: String
+  format: String
+  galleryIndex: Int
+  imageType: ImageType
+  url: String
+}
+
+type VariantOptionQualifier {
+  image: Image
+  name: String
+  qualifier: String
+  value: String
+}
+
+type VariantOption {
+  code: String
+  priceData: Price
+  stock: Stock
+  url: String
+  variantOptionQualifiers: [VariantOptionQualifier]
+}
+
+type BaseOption {
+  options: [VariantOption]
+  selected: VariantOption
+  variantType: String
+}
+
+type Category {
+  code: String
+  image: Image
+  url: String
+}
+
+type FeatureUnit {
+  name: String
+  symbol: String
+  unitType: String
+}
+
+type FeatureValue {
+  value: String
+}
+
+type Feature {
+  code: String
+  comparable: Boolean
+  description: String
+  featureUnit: FeatureUnit
+  featureValues: [FeatureValue]
+  name: String
+  range: Boolean
+  type: String
+}
+
+type Classification {
+  code: String
+  features: [Feature]
+  name: String
+}
+
+type Stock {
+  stockLevel: Int
+  stockLevelStatus: String
+}
+
+type FutureStock {
+  date: Date
+  formattedDate: String
+  stock: Stock
+}
+
+type PromotionRestriction {
+  description: String
+  restrictionType: String
+}
+
+type Promotion {
+  code: String
+  couldFireMessages: [String]
+  description: String
+  enabled: Boolean
+  endDate: Date
+  firedMessages: [String]
+  priority: Int
+  productBanner: Image
+  promotionGroup: String
+  promotionType: String
+  restrictions: [PromotionRestriction]
+  startDate: Date
+  title: String
+}
+
+type ProductReference {
+  description: String
+  preselected: Boolean
+  quantity: Int
+  referenceType: String
+  target: Product
+}
+
+type Product {
+  availableForPickup: Boolean
+  averageRating: Float
+  baseOptions: [BaseOption]
+  baseProduct: String
+  categories: [Category]
+  classifications: [Classification]
+  code: String
+  description: String
+  futureStocks: [FutureStock]
+  images: [Image]
+  manufacturer: String
+  multidimensional: Boolean
+  name: String
+  numberOfReviews: Int
+  potentialPromotions: [Promotion]
+  price: Price
+  priceRange: PriceRange
+  productReferences: [ProductReference]
+  purchasable: Boolean
+  #reviews: Review[]
+  stock: Stock
+  summary: String
+  url: String
+  #variantMatrix: VariantMatrixElement[]
+  variantOptions: [VariantOption]
+  variantType: String
+  volumePrices: [Price]
+  volumePricesFlag: Boolean
+}
+
+extend type Query {
+  # Product
+  product(code: String): Product
+  # Products
+  products(limit: Int, after: Int): [Product]
+}

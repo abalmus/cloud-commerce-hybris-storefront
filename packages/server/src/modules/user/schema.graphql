@@ -1,0 +1,265 @@
+type Principal {
+  name: String
+  uid: String
+}
+
+type PromotionOrderEntryConsumed {
+  adjustedUnitPrice: Float
+  code: String
+  orderEntryNumber: Int
+  quantity: Int
+}
+
+type PromotionResult {
+  consumedEntries: [PromotionOrderEntryConsumed]
+  description: String
+  promotion: Promotion
+}
+
+type Currency {
+  active: Boolean
+  isocode: String
+  name: String
+  symbol: String
+}
+
+type Voucher {
+  appliedValue: Price
+  code: String
+  currency: Currency
+  description: String
+  freeShipping: Boolean
+  name: String
+  value: Int
+  valueFormatted: String
+  valueString: String
+  voucherCode: String
+}
+
+type Region {
+  countryIso: String
+  isocode: String
+  isocodeShort: String
+  name: String
+}
+
+type Country {
+  isocode: String
+  name: String
+}
+
+type Address {
+  companyName: String
+  country: Country
+  defaultAddress: Boolean
+  email: String
+  firstName: String
+  formattedAddress: String
+  id: String
+  lastName: String
+  line1: String
+  line2: String
+  phone: String
+  postalCode: String
+  region: Region
+  shippingAddress: Boolean
+  title: String
+  titleCode: String
+  town: String
+  visibleInAddressBook: Boolean
+}
+
+type DeliveryMode {
+  code: String
+  deliveryCost: Price
+  description: String
+  name: String
+}
+
+type GeoPoint {
+  latitude: Int
+  longitude: Int
+}
+
+#type Time {
+#    formattedHour: String
+#    hour: String #Uint8Array
+#    minute: String #Uint8Array
+#}
+
+type SpecialOpeningDay {
+  closed: Boolean
+  closingTime: Time
+  comment: String
+  date: Date
+  formattedDate: String
+  name: String
+  openingTime: Time
+}
+
+type WeekdayOpeningDay {
+  closed: Boolean
+  closingTime: Time
+  openingTime: Time
+  weekDay: String
+}
+
+type OpeningSchedule {
+  code: String
+  name: String
+  specialDayOpeningList: [SpecialOpeningDay]
+  weekDayOpeningList: [WeekdayOpeningDay]
+}
+
+type PointOfService {
+  address: Address
+  description: String
+  displayName: String
+  distanceKm: Int
+  #features: (propertyName: String]): String
+  formattedDistance: String
+  geoPoint: GeoPoint
+  mapIcon: Image
+  name: String
+  openingHours: OpeningSchedule
+  storeContent: String
+  storeImages: [Image]
+  url: String
+}
+
+type OrderEntry {
+  basePrice: Price
+  deliveryMode: DeliveryMode
+  deliveryPointOfService: PointOfService
+  entryNumber: Int
+  product: Product
+  quantity: Int
+  totalPrice: Price
+  updateable: Boolean
+}
+
+type DeliveryOrderEntryGroup {
+  deliveryAddress: Address
+  entries: [OrderEntry]
+  quantity: Int
+  totalPriceWithTax: Price
+}
+
+type PickupOrderEntryGroup {
+  deliveryPointOfService: PointOfService
+  distance: Int
+  entries: [OrderEntry]
+  quantity: Int
+  totalPriceWithTax: Price
+}
+
+type CardType {
+  code: String
+  name: String
+}
+
+type PaymentDetails {
+  accountHolderName: String
+  billingAddress: Address
+  cardNumber: String
+  cardType: CardType
+  defaultPayment: Boolean
+  expiryMonth: String
+  expiryYear: String
+  id: String
+  issueNumber: String
+  saved: Boolean
+  startMonth: String
+  startYear: String
+  subscriptionId: String
+}
+
+type Cart {
+  appliedOrderPromotions: [PromotionResult]
+  appliedProductPromotions: [PromotionResult]
+  appliedVouchers: [Voucher]
+  calculated: Boolean
+  code: String
+  deliveryAddress: Address
+  deliveryCost: Price
+  deliveryItemsQuantity: Int
+  deliveryMode: DeliveryMode
+  deliveryOrderGroups: [DeliveryOrderEntryGroup]
+  description: String
+  entries: OrderEntry
+  expirationTime: Date
+  guid: String
+  name: String
+  net: Boolean
+  orderDiscounts: Price
+  paymentInfo: PaymentDetails
+  pickupItemsQuantity: Int
+  pickupOrderGroups: [PickupOrderEntryGroup]
+  potentialOrderPromotions: [PromotionResult]
+  potentialProductPromotions: [PromotionResult]
+  productDiscounts: Price
+  saveTime: Date
+  savedBy: Principal
+  site: String
+  store: String
+  subTotal: Price
+  totalDiscounts: Price
+  totalItems: Int
+  totalPrice: Price
+  totalPriceWithTax: Price
+  totalTax: Price
+  totalUnitCount: Int
+  user: Principal
+}
+
+type CartList {
+  carts: [Cart]
+}
+
+type AuthResult {
+  access_token: String
+  token_type: String
+  expires_in: Int
+  scope: String
+}
+
+type Language {
+  active: Boolean
+  isocode: String
+  name: String
+  nativeName: String
+}
+
+type User {
+  currency: Currency
+  customerId: String
+  deactivationDate: Date
+  defaultAddress: Address
+  displayUid: String
+  firstName: String
+  language: Language
+  lastName: String
+  name: String
+  title: String
+  titleCode: String
+  uid: String
+}
+
+type UserPayload {
+  user: User
+  errors: [FieldError!]
+}
+
+extend type Query {
+  # Cart
+  carts(userId: String!, cartId: String!): CartList
+  users: [User]
+  currentUser: User
+  user(userId: String!): User
+}
+
+extend type Mutation {
+  addUser: User
+  createCart(userId: String!): Cart
+  auth(userId: String!, password: String!): AuthResult
+}

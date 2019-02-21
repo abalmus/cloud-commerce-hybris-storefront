@@ -26,8 +26,6 @@
     "watch": "spin watch",
     "heroku-postbuild": "lerna run heroku-postbuild --stream",
     "cli": "node tools/cli",
-    "precommit": "lint-staged",
-    "postinstall": "opencollective postinstall",
     "stripe:setup": "lerna run --scope=server stripe:setup"
   },
   "lint-staged": {
@@ -142,7 +140,6 @@
     "lodash": "^4.17.4"
   },
   "dependencies": {
-    "opencollective": "^1.0.3",
     "spinjs": "^0.4.166"
   },
   "resolutions": {

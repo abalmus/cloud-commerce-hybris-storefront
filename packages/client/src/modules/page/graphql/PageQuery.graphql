@@ -1,0 +1,39 @@
+query page($pageLabelOrId: String, $pageType: PageType, $code: String) {
+  page(pageLabelOrId: $pageLabelOrId, pageType: $pageType, code: $code) {
+    defaultPage
+    name
+    template
+    typeCode
+    uid
+    title
+    contentSlots {
+      name
+      position
+      slotId
+      slotShared
+      slotStatus
+      components {
+        modifiedtime
+        name
+        typeCode
+        uid
+        productCodes
+        title
+        media {
+          desktop {
+            code
+            mime
+            altText
+            url
+          }
+          mobile {
+            code
+            mime
+            altText
+            url
+          }
+        }
+      }
+    }
+  }
+}

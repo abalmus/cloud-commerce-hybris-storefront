@@ -1,0 +1,89 @@
+query product($code: String!) {
+  product(code: $code) {
+    availableForPickup
+    averageRating
+    baseOptions {
+      variantType
+    }
+    baseProduct
+    categories {
+      code
+      url
+    }
+    classifications {
+      code
+      name
+    }
+    code
+    description
+    futureStocks {
+      date
+      formattedDate
+    }
+    images {
+      altText
+      format
+      galleryIndex
+      imageType
+      url
+    }
+    manufacturer
+    multidimensional
+    name
+    numberOfReviews
+    potentialPromotions {
+      code
+      description
+      enabled
+      endDate
+      priority
+      promotionGroup
+      promotionType
+      startDate
+      title
+    }
+    price {
+      currencyIso
+      formattedValue
+      maxQuantity
+      minQuantity
+      priceType
+      value
+    }
+    priceRange {
+      maxPrice {
+        formattedValue
+      }
+      minPrice {
+        formattedValue
+      }
+    }
+    productReferences {
+      description
+      preselected
+      quantity
+      referenceType
+    }
+    purchasable
+    stock {
+      stockLevel
+      stockLevelStatus
+    }
+    summary
+    url
+    variantOptions {
+      code
+      url
+    }
+    variantType
+    volumePrices {
+      currencyIso
+      formattedValue
+      maxQuantity
+      minQuantity
+      priceType
+      value
+    }
+    volumePricesFlag
+  }
+}

@@ -1,0 +1,6 @@
+fragment ComponentInfo on Component {
+  modifiedtime
+  name
+  typeCode
+  uid
+}

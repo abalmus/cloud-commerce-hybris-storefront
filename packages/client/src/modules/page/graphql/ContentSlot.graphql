@@ -1,0 +1,7 @@
+fragment ContentSlotInfo on CMSPage {
+  name
+  position
+  slotId
+  slotShared
+  slotStatus
+}

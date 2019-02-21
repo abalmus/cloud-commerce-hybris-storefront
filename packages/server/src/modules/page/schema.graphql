@@ -1,0 +1,68 @@
+enum PageType {
+  ContentPage
+  ProductPage
+  CategoryPage
+  CatalogPage
+}
+
+enum FieldsType {
+  BASIC
+  DEFAULT
+  FULL
+}
+
+type MediaInfo {
+  code: String
+  mime: String
+  altText: String
+  url: String
+}
+
+type Media {
+  tablet: MediaInfo
+  desktop: MediaInfo
+  mobile: MediaInfo
+  widescreen: MediaInfo
+}
+
+type Component {
+  modifiedtime: Date
+  name: String
+  media: Media
+  typeCode: String
+  uid: String
+  productCodes: String
+  title: String
+}
+
+type ContentSlot {
+  components: [Component]
+  name: String
+  position: String
+  slotId: String
+  slotShared: Boolean
+  slotStatus: String
+}
+
+type CMSPage {
+  contentSlots: [ContentSlot]
+  defaultPage: Boolean
+  name: String
+  template: String
+  title: String
+  typeCode: PageType
+  uid: String
+}
+
+extend type Query {
+  # Page
+  page(
+    pageLabelOrId: String
+    pageType: PageType
+    fields: FieldsType
+    # If pageType is ProductPage, code should be product code;
+    # If pageType is CategoryPage, code should be category code;
+    # If pageType is CatalogPage, code should be catalog code;
+    code: String
+  ): CMSPage
+}
