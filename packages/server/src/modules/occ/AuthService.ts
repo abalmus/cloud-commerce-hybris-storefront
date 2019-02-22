@@ -8,8 +8,8 @@ export default class AuthService {
     public async auth(userId: string, password: string) {
         const params = {
             grant_type: 'password',
-            client_id: 'b2caccelerator', // TODO: get from config or process.env
-            client_secret: 'ghqpghqphgpq', // TODO: get from config or process.env
+            client_id: process.env.CLIENT_ID,
+            client_secret: process.env.SECRET,
             username: userId,
             password
         };
